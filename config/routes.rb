@@ -24,4 +24,6 @@ CrisisHelper::Application.routes.draw do
   get "local_tweets" => "local_tweets#show"
 
   get "shelters" => "shelters#show"
+
+  get "noaa" => "noaa_alerts#show"
 end

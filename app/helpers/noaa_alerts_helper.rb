@@ -1,0 +1,2 @@
+module NoaaAlertsHelper
+end
