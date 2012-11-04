@@ -1,9 +1,13 @@
 class LocalTweetsController < ApplicationController
+  include ApplicationHelper
   def show
     redirect_to '/' and return unless @location
 
     # TODO
-    @tweets = Twitter.search("#sandy", :geocode => '38.865805,-77.137318,2mi', :lang => 'en', :count => 30, :result_type => 'recent', :max_id => (params[:id] ? params[:id] : '')).results
+    geo = googGeoIP(@location.county.zipcodes.first.code)
+    pos = geo.first['geometry']['location']
+    @tweets = Twitter.search("#dc", :geocode => "#{pos['lat']},#{pos['lng']},2mi", :lang => 'en', :count => 30, :result_type => 'recent', :max_id => (params[:id] ? params[:id] : '')).results
+    # raise @tweets.inspect
 
     respond_to do |format|
       format.html

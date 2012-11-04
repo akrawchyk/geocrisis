@@ -3,8 +3,13 @@ class RoadConditionsController < ApplicationController
   require 'json'
 
   def show
+    redirect_to('/') and return unless @location
     # TODO
-    lat, lng = "34.0522", "-118.1373328"
+
+    geo = googGeoIP(@location.county.zipcodes.first.code)
+    pos = geo.first['geometry']['location']
+
+    lat, lng = pos['lat'], pos['lng']
     places = JSON.parse(open("#{Rails.application.config.goog_geocode_url}latlng=#{lat},#{lng}&rankby=distance&sensor=false").read)['results']
 
     @road_conditions = []

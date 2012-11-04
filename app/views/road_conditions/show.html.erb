@@ -1,7 +1,10 @@
 <div id="road_conditions">
 	<%= render :partial => "common/page_title", :locals => {:title => "Road Conditions"} %>
 
-	<% @road_conditions.each do |r| %>
+	<% @road_conditions.each do |r|
+    geo = googGeoIP(@location.county.zipcodes.first.code)
+    pos = geo.first['geometry']['location']
+  %>
 		<div class="item">
 			<h4 class="description">
 				<%= r['description'] %>
