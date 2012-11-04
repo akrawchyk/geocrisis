@@ -11,8 +11,12 @@ CrisisHelper.Location.OPTIONS = {
   maximumAge: CrisisHelper.Location.MAXIMUM_AGE
 };
 
-CrisisHelper.App.buildHome = function(geoData) {
-  console.log(geoData);
+CrisisHelper.Location.position = null;
+
+CrisisHelper.App.buildHome = function(json) {
+  $('#overlay').remove();
+  $('.container').empty();
+  console.log(json);
 };
 
 CrisisHelper.App.fillCountyList = function(countyList) {
@@ -37,8 +41,16 @@ CrisisHelper.App.fillCountyList = function(countyList) {
   $('form').replaceWith($countyListElem);
 };
 
-CrisisHelper.Location.getLocation = function() {
-  if (navigator.geolocation) {
+CrisisHelper.Location.getGeoLocation = function() {
+  var pos = localStorage.getItem('CrisisHelperPosition');
+  if (pos) {
+    CrisisHelper.Location.position = JSON.parse(pos);
+    if (window.location.pathname === '/') {
+      // TODO build home with ajax
+      window.location = '/home';
+    }
+    return false;
+  } else if (navigator.geolocation) {
     // append overlay
     var $overlay = $('<div/>', {
       id: 'overlay',
@@ -52,12 +64,15 @@ CrisisHelper.Location.getLocation = function() {
       CrisisHelper.Location.error,
       CrisisHelper.Location.OPTIONS
     );
-  } else if (!navigator.geolocation) {
+  } else {
     alert('Geolocation API not supported');
   }
 };
 
 CrisisHelper.Location.success = function(pos) {
+  console.log(pos);
+  localStorage.setItem('CrisisHelperPosition', JSON.stringify(pos));
+  CrisisHelper.Location.position = pos;
   CrisisHelper.Location.getByGeoLocation(pos.coords.latitude, pos.coords.longitude);
 };
 
@@ -75,25 +90,25 @@ CrisisHelper.Location.getByGeoLocation = function(lat, lng) {
   $('#overlay').html('Location acquired!');
 
   $.ajax({
-    url: '/getByGeoLocation',
+    url: '/locations',
     dataType: 'json',
     data: {latlng: lat + ',' + lng},
-    success: CrisisHelper.App.buildHome
+    success: CrisisHelper.App.buildLocation
   });
 };
 
 CrisisHelper.Location.getByZip = function(zip) {
   $.ajax({
-    url: '/getByZip',
+    url: '/locations',
     dataType: 'json',
     data: {zip: zip},
-    success: CrisisHelper.App.buildHome
+    success: CrisisHelper.App.buildLocation
   });
 };
 
 CrisisHelper.Location.getByCityState = function(city, state) {
   $.ajax({
-    url: '/getByCityState',
+    url: '/locations',
     dataType: 'json',
     data: {city: city, state: state},
     success: CrisisHelper.App.fillCountyList
@@ -101,5 +116,5 @@ CrisisHelper.Location.getByCityState = function(city, state) {
 };
 
 $(function() {
-  CrisisHelper.Location.getLocation();
+  CrisisHelper.Location.getGeoLocation();
 });
