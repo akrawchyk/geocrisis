@@ -9,6 +9,11 @@ class LocationZipConstraint
     request.params[:zipcode] =~ /\d{5}/
   end
 end
+class LocationCityConstraint
+  def self.matches?(request)
+    request.params[:city] =~ /.+/ and request.params[:state] =~ /[A-Za-z]{2}/
+  end
+end
 
 CrisisHelper::Application.routes.draw do
 
@@ -19,6 +24,7 @@ CrisisHelper::Application.routes.draw do
   get 'locations/:id' => 'locations#show', as: :location
   get 'locations' => 'locations#show', constraints: LocationByGeoipConstraint, as: :location_by_geoip
   get 'locations' => 'locations#show', constraints: LocationZipConstraint, as: :location_by_zip
+  get 'locations' => 'locations#show', constraints: LocationCityConstraint, as: :location_by_city
 
   get "local_tweets" => "local_tweets#show"
 
