@@ -10,13 +10,19 @@ CrisisHelper.Location.OPTIONS = {
   timeout: CrisisHelper.Location.TIMEOUT,
   maximumAge: CrisisHelper.Location.MAXIMUM_AGE
 };
+CrisisHelper.App.STORAGE_KEYS = [
+  'CrisisHelperAlerts',
+  'CrisisHelperPosition'
+];
 
 CrisisHelper.Location.position = null;
+CrisisHelper.Location.watchProcess = null;
 
 CrisisHelper.Location.getGeoLocation = function(callback) {
   var pos = localStorage.getItem('CrisisHelperPosition');
   if (pos) {
     CrisisHelper.Location.position = JSON.parse(pos);
+    CrisisHelper.Location.watch();
     callback();
   } else if (navigator.geolocation) {
     // append overlay
@@ -28,7 +34,7 @@ CrisisHelper.Location.getGeoLocation = function(callback) {
 
     // request location
     navigator.geolocation.getCurrentPosition(
-      CrisisHelper.Location.success,
+      CrisisHelper.Location.setLocation,
       CrisisHelper.Location.error,
       CrisisHelper.Location.OPTIONS
     );
@@ -37,11 +43,31 @@ CrisisHelper.Location.getGeoLocation = function(callback) {
   }
 };
 
-CrisisHelper.Location.success = function(pos) {
-  console.log(pos);
-  localStorage.setItem('CrisisHelperPosition', JSON.stringify(pos));
+CrisisHelper.Location.watch = function() {
+  console.log('Started watch');
+  CrisisHelper.Location.watchProcess = navigator.geolocation.getCurrentPosition(
+    CrisisHelper.Location.watchSuccess,
+    CrisisHelper.Location.error,
+    CrisisHelper.Location.OPTIONS
+  );
+};
+
+CrisisHelper.Location.setLocation = function(pos) {
+  CrisisHelper.App.clearStorage();
+  localStorage.setItem('CrisisHelperPosition', JSON.stringify(pos)); // TODO this would rather be a custom JSON object from the backend
   CrisisHelper.Location.position = pos;
   CrisisHelper.Location.getByGeoLocation(pos.coords.latitude, pos.coords.longitude);
+};
+
+CrisisHelper.Location.watchSuccess = function(pos) {
+  if (pos.coords.latitude > CrisisHelper.Location.position.coords.latitude + 0.5 ||
+      pos.coords.latitude < CrisisHelper.Location.position.coords.latitude - 0.5 ||
+      pos.coords.longitude > CrisisHelper.Location.position.coords.longitude + 0.5 ||
+      pos.coords.longitude < CrisisHelper.Location.position.coords.longitude - 0.5) {
+    console.log('new position');
+    console.log(pos);
+    CrisisHelper.Location.setLocation(pos);
+  }
 };
 
 CrisisHelper.Location.error = function(error) {
@@ -83,26 +109,34 @@ CrisisHelper.Location.getByGeoLocation = function(lat, lng) {
 //   });
 // };
 
+CrisisHelper.App.clearStorage = function() {
+  $.each(CrisisHelper.App.STORAGE_KEYS, function(index, key) {
+    localStorage.removeItem(key);
+  });
+};
+
 CrisisHelper.App.addAlerts = function(alerts) {
-  localStorage.setItem('CrisisHelperAlerts', JSON.stringify(alerts));
-
-  var $alertsElem = $('<div/>', {
-    'class': 'alert alert-error',
-    text: 'Natioal Weather Service Alert',
-    prependTo: '#home'
-  });
-
-  var $alertsIcon = $('<i/>', {
-    'class': 'icon-warning-sign',
-    prependTo: $alertsElem
-  });
-
-  $.each(alerts, function(index, alert) {
-    var $alertElem = $('<p/>', {
-      text: alert.title,
-      appendTo: $alertsElem
+  if (alerts[0].summary) {
+    localStorage.setItem('CrisisHelperAlerts', JSON.stringify(alerts));
+    CrisisHelper.Location.alerts = JSON.parse(alerts);
+    var $alertsElem = $('<div/>', {
+      'class': 'alert alert-error',
+      text: 'Natioal Weather Service Alert',
+      prependTo: '#home'
     });
-  });
+
+    var $alertsIcon = $('<i/>', {
+      'class': 'icon-warning-sign',
+      prependTo: $alertsElem
+    });
+
+    $.each(alerts, function(index, alert) {
+      var $alertElem = $('<p/>', {
+        text: alert.title,
+        appendTo: $alertsElem
+      });
+    });
+  }
 };
 
 CrisisHelper.App.buildLocation = function() {
@@ -114,11 +148,10 @@ CrisisHelper.App.buildLocation = function() {
     $.ajax({
       url: '/noaa',
       dataType: 'json',
-      data: {cc: 'NJC001'}, // TODO
+      data: {cc: 'ARC043'}, // TODO
       success: CrisisHelper.App.addAlerts
     });
   }
-
 };
 
 $(function() {
