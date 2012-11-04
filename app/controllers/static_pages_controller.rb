@@ -7,8 +7,14 @@ class StaticPagesController < ApplicationController
   end
 
   def landing_page
-    render :home and return if @session.try(:location_id) and @location = Location.find_by_id(@session.try(:location_id))
+    # Try to use session
+    if @session.try(:location_id)
+      @location = Location.find_by_id(@session.try(:location_id))
 
+      render 'static_pages/home'
+    end
+
+    # No session, load view with form
     @hide_nav = true
   end
 

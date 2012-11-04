@@ -14,7 +14,7 @@ class LocationsController < ApplicationController
       @location = Location.find_by_city_and_state(params[:city], params[:state]) unless @location || params[:city].blank? || params[:state].blank?
     end
 
-    render :controller => :static_pages, :method => :home
+    redirect_to '/'
   end
 
   def handle_invalid_session

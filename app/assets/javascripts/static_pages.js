@@ -14,8 +14,13 @@ CrisisHelper.Location.position = null;
 CrisisHelper.Location.watchProcess = null;
 
 CrisisHelper.Location.getGeoLocation = function(callback) {
-  if(!session_data && navigator.geolocation) {
-    console.log('line 18');
+  // Valid session, do nothing
+  if(session_data) {
+    return;
+  }
+
+  if(navigator.geolocation) {
+    console.log('Check for geolocation');
     // append overlay
     var $overlay = $('<div/>', {
       id:'overlay',
@@ -29,17 +34,17 @@ CrisisHelper.Location.getGeoLocation = function(callback) {
       CrisisHelper.Location.error,
       CrisisHelper.Location.OPTIONS
     );
-  } else if(session_data) {
-    console.log('line 33');
-    window.location = '/home';
-  } else {
-    console.log('line 36');
-    var $alertError = $('<div/>', {
-      'class':'alert alert-error',
-      text:'Geolocation API not supported',
-      prependTo:'#landing-page'
-    });
+
+    return;
   }
+
+  console.log('Catastrophic failure.');
+  var $alertError = $('<div/>', {
+    'class':'alert alert-error',
+    text:'Geolocation API not supported',
+    prependTo:'#landing-page'
+  });
+
 };
 
 CrisisHelper.Location.watch = function() {
