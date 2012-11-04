@@ -28,7 +28,10 @@ h2.title_name { text-align: left; margin-left: 0; }
 }
 #home ul li.shift_left { margin-left: -1.5em; margin-right: 1.5em; }
 
-#landing-page, #home { text-align: center; }
+#landing-page, #home, #tweets .span6 { text-align: center; }
+#tweets .span6 {
+  margin-bottom: 2em;
+}
 
 #road_conditions .item {
 	clear: left;

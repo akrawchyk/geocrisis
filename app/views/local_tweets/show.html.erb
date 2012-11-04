@@ -3,15 +3,18 @@
 
   <% @tweets.map do |tweet| %>
     <div class="span12">
-      <div class="tweet">
-        <div class="avatar">
-          <%= image_tag(tweet.user.profile_image_url) %>
-        </div>
-        <div class="author_name"><strong><%= tweet.user.username %> says:</strong></div>
+      <div class="tweet" data-tweet-id="<%= tweet.id %>">
+        <%= image_tag(tweet.user.profile_image_url, :class => 'avatar') %>
+        <strong><%= tweet.user.username %> says:</strong>
         <div class="content">
           <%= tweet.text %>
         </div>
       </div>
     </div>
   <% end %>
+  <div class="span6 offset3">
+    <button class="btn btn-info" onclick="LocalTweets.retrieveEarlier($(this).closest('.tweet').data('tweet-id'))">
+      Load more
+    </button>
+  </div>
 </div>
