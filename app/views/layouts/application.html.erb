@@ -15,7 +15,7 @@
       <% @nav_extra_klass ||= "" %>
       <div class="navbar navbar-fixed-top <%= @nav_extra_klass %>">
         <% if @show_back_button ||= false %>
-          <button type="button" class="back_button btn">
+          <button type="button" class="back_button btn" onclick="history.go(-1)">
             <i class="icon-home"></i>
             Back
           </button>

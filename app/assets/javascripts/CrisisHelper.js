@@ -32,13 +32,18 @@ CrisisHelper.App.fillCountyList = function(countyList) {
       data: {
         'county-id': county.id
       },
-      onclick: 'javascript: CrisisHelper.Location.getByCounty($(this).data("county-id"))',
+      onclick: 'CrisisHelper.Location.getByCounty($(this).data("county-id"))',
       text: county.name,
       appendTo: $countyListElem
     });
   });
 
   $('form').replaceWith($countyListElem);
+};
+
+CrisisHelper.App.LocalTweets = function() {
+  // TODO make ajaxable
+  window.location = '/local_tweets';
 };
 
 CrisisHelper.Location.getGeoLocation = function() {

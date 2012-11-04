@@ -1,13 +1,15 @@
-<div id="tweets">
-	<% @tweets.map do |tweet| %>
-		<div class="alert alert-info">
-			<div class="avatar">
-				<%= image_tag(tweet.user.profile_image_url) %>
-			</div>
-			<div class="author_name"><strong><%= tweet.user.username %> says:</strong></div>
-			<div class="content">
-				<%= tweet.text %>
-			</div>
-		</div>
-	<% end %>
+<div id="tweets" class="row">
+  <% @tweets.map do |tweet| %>
+    <div class="span12">
+      <div class="tweet">
+        <div class="avatar">
+          <%= image_tag(tweet.user.profile_image_url) %>
+        </div>
+        <div class="author_name"><strong><%= tweet.user.username %> says:</strong></div>
+        <div class="content">
+          <%= tweet.text %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
