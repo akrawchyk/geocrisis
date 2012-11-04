@@ -19,11 +19,7 @@ class RoadConditionsController < ApplicationController
 
       bounding_box = "#{sw['lat']},#{sw['lng']},#{ne['lat']},#{ne['lng']}"
 
-      # puts "#{Rails.application.config.bing_maps_api_url.sub('#bounding_box', Location::get_lat_long_bounding_box(34.0522, 118.1373328) )}"
-      # puts Location::get_lat_long_bounding_box(34.0522, 118.1373328, 20)
-      # puts "#{Rails.application.config.bing_maps_api_url.sub('#bounding_box', bounding_box)}"
       @road_conditions = JSON.parse(open("#{Rails.application.config.bing_maps_api_url.sub('#bounding_box', bounding_box)}").read)
-      # puts @road_conditions["resourceSets"][0]["resources"]
       @road_conditions = (@road_conditions != "") ? @road_conditions['resourceSets'][0]['resources'] : []
 
       unless @road_conditions.empty?
