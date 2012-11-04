@@ -1,8 +1,9 @@
 <div id="shelters" class="row">
+  <%= render :partial => "common/page_title", :locals => {:title => "Shelters"} %>
+
   <div class="span12">
     <ul>
       <% @shelters.each do |shelter| %>
-        <!-- <%= shelter.to_yaml %> -->
         <li>
           <h4><%= shelter['name'] %></h4>
           <% if shelter['opening_hours'] %>
@@ -11,6 +12,7 @@
           <address>
             <%= shelter['vicinity'] %>
           </address>
+          <button type="submit" class="btn btn-danger" onclick="window.open('https://maps.google.com/maps?ll=<%= "#{shelter['geometry']['location']['lat']},#{shelter['geometry']['location']['lng']}', '_blank')" %>">View Map</button> 
         </li>
       <% end %>
     </ul>

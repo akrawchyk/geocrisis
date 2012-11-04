@@ -12,9 +12,8 @@
   </head>
   <body>
     <% unless @hide_nav %>
-      <% @nav_extra_klass ||= "" %>
-      <div class="navbar navbar-fixed-top <%= @nav_extra_klass %>">
-        <% if @show_back_button ||= false %>
+      <div class="navbar navbar-fixed-top <%= "downstream" unless @hide_back_button %>">
+        <% unless @hide_back_button %>
           <button type="button" class="back_button btn" onclick="history.go(-1)">
             <i class="icon-home"></i>
             Back
@@ -22,9 +21,12 @@
         <% end %>
 
         <span class="title"><%= "#{@location.city}, #{@location.state}" %></span>
-        <button type="button" class="btn">
-          <i class="icon-align-justify"></i>
-        </button>
+        <%# TODO %>
+        <% unless @hide_menu %>
+          <button type="button" class="btn">
+            <i class="icon-align-justify"></i>
+          </button>
+        <% end %>
       </div>
     <% end %>
 

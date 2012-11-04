@@ -1,4 +1,6 @@
 <div id="road_conditions">
+	<%= render :partial => "common/page_title", :locals => {:title => "Road Conditions"} %>
+
 	<% @road_conditions.each do |r| %>
 		<div class="item">
 			<h4 class="description">
