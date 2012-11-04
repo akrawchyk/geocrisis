@@ -1,0 +1,2 @@
+Rails.application.config.bing_maps_api_key = 'AhGfmcdmsX_dIYyuJ1CW06DVKcadebbVIJPpOmbziU9WZ851hWjhtDmM4JlPUlCf'
+Rails.application.config.bing_maps_api_url = "http://dev.virtualearth.net/REST/v1/Traffic/Incidents/#bounding_box?key=#{Rails.application.config.bing_maps_api_key}"
