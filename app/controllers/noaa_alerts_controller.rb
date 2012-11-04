@@ -3,7 +3,15 @@ class NoaaAlertsController < ApplicationController
 
   def show
     #TODO params should only be for json
-    @feed = Nokogiri::XML(open("#{Rails.application.config.noaa_url}&x=#{params[:cc]}"))
+    if (params[:cc].blank?)
+      cc = @location.get_cc
+    else
+      cc = params[:cc]
+    end
+
+    # raise cc.inspect
+
+    @feed = Nokogiri::XML(open("#{Rails.application.config.noaa_url}&x=#{cc}"))
     @feed.remove_namespaces!
     @noaa_alerts = @feed.xpath("//entry")
 
