@@ -11,6 +11,7 @@
           <address>
             <%= shelter['vicinity'] %>
           </address>
+          <button type="submit" class="btn btn-danger" onclick="window.open('https://maps.google.com/maps?ll=<%= "#{shelter['geometry']['location']['lat']},#{shelter['geometry']['location']['lng']}', '_blank')" %>">View Map</button> 
         </li>
       <% end %>
     </ul>
