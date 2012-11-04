@@ -1,11 +1,13 @@
 class StaticPagesController < ApplicationController
   def home
+    redirect_to '/' unless @session.try(:location_id) and (@location = Location.find_by_id(@session.try(:location_id)))
+
     @hide_back_button = true
     @hide_menu = true
   end
 
   def landing_page
-    render :home and return if @session_location and @location = Location.find_by_id(@session_location)
+    render :home and return if @session.try(:location_id) and @location = Location.find_by_id(@session.try(:location_id))
 
     @hide_nav = true
   end
@@ -15,7 +17,7 @@ class StaticPagesController < ApplicationController
     return if @session_location
 
     # Redirect if we didn't find a location
-    redirect_to '/home' unless @location
+    redirect_to '/' unless @location
 
     # Create new session
     session = Session.new(:session_hash => request.session_options[:id])
