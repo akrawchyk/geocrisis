@@ -24,6 +24,14 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <% unless @hide_nav %>
+    <div class="navbar navbar-fixed-top">
+      <span class="title"><%= @nav_title ||= 'Washington, VA' %></span>
+      <button type="button" class="btn">
+        <i class="icon-align-justify"></i>
+      </button>  
+    </div>    
+    <% end %>
 
     <%= yield %>
 
