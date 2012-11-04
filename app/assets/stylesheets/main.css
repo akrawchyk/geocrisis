@@ -13,6 +13,7 @@ h1, h2, h3, h4, h5 { color: #262223; }
 }
 .navbar button { float: right; margin-right: 2em; }
 .navbar span.title { margin-left: 2em; color: #f2f2f2; margin-top: .5em; float: left; font-size: 18px; }
+
 #home ul { display: inline-table; }
 #home ul li { 
 	display: inline;
@@ -24,7 +25,7 @@ h1, h2, h3, h4, h5 { color: #262223; }
 }
 #home ul li.shift_left { margin-left: -1.5em; margin-right: 1.5em; }
 
-#landing-page {
+#landing-page, #home {
   text-align: center;
 }
 
