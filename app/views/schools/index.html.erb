@@ -1,0 +1,23 @@
+<div id="schools" class="row">
+  <%= render :partial => "common/page_title", :locals => {:title => "Schools"} %>
+
+  <div class="span12">
+    <ul>
+      <% unless @schools.blank? || @schools.empty? %>
+        <% @schools.each do |school|
+          geo = googGeoIP(@location.county.zipcodes.first.code)
+          pos = geo.first['geometry']['location']
+        %>
+          <li>
+            <h4><%= school['name'] %></h4>
+            <p class='tel'><%= school.phone %></p>
+            <address>
+              <%= school['address'] %>
+            </address>
+            <button type="submit" class="btn btn-danger" onclick="window.open('https://maps.google.com/maps?ll=<%= "#{pos['lat']},#{pos['lng']}', '_blank')" %>">View Map</button>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
