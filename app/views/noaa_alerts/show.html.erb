@@ -1,3 +1,10 @@
-<% @noaa_alerts.each do |node| %>
-  <%= node.css('summary') %>
-<% end %>
+<div id="noaa_alerts" class="row">
+  <div class="span12">
+    <% @noaa_alerts.each do |node| %>
+      <div class="entry">
+        <strong><%= node.xpath('title').text %></strong>
+        <%= node.xpath('summary').text %>
+      </div>
+    <% end %>
+  </div>
+</div>
