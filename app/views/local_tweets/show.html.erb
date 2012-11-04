@@ -1,0 +1,8 @@
+<h1>LocalTweets#show</h1>
+<p>Find me in app/views/local_tweets/show.html.erb</p>
+<ul>
+  <!-- <%= @tweets.to_yaml %> -->
+<% @tweets.map do |tweet| %>
+  <li><%= image_tag(tweet.user.profile_image_url) %><%= tweet.text %></li>
+<% end %>
+</ul>

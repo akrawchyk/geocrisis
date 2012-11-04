@@ -101,7 +101,7 @@ CrisisHelper.Location.getByZip = function(zip) {
   $.ajax({
     url: '/locations',
     dataType: 'json',
-    data: {zip: zip},
+    data: {zipcode: zip},
     success: CrisisHelper.App.buildLocation
   });
 };
