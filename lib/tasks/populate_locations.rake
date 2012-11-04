@@ -17,7 +17,7 @@ namespace :locations do
 
   desc "connect cities to counties"
   task :countify => :environment do
-    Location.all.each do |location|
+    Location.where('county_id IS NULL').each do |location|
       #begin
         city_url = "http://www.uscounties.org/cffiles_web/counties/city_res.cfm?city=#{CGI::escape location.city}"
         doc = Nokogiri::HTML(open city_url)

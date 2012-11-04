@@ -21,7 +21,7 @@
           </button>
         <% end %>
 
-        <span class="title"><%= @nav_title ||= 'Washington, VA' %></span>
+        <span class="title"><%= "#{@location.city}, #{@location.state}" %></span>
         <button type="button" class="btn">
           <i class="icon-align-justify"></i>
         </button>

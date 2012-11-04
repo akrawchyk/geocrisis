@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121104081746) do
+ActiveRecord::Schema.define(:version => 20121104161425) do
 
   create_table "alerts", :force => true do |t|
     t.string  "type",        :null => false
@@ -31,9 +31,9 @@ ActiveRecord::Schema.define(:version => 20121104081746) do
   end
 
   create_table "counties", :force => true do |t|
-    t.string "name", :null => false
-    t.string "fip",  :null => false
-    t.string "state_code",  :null => false
+    t.string "name",                    :null => false
+    t.string "fip",                     :null => false
+    t.string "state_code", :limit => 2
   end
 
   create_table "counties_locations", :id => false, :force => true do |t|
@@ -42,8 +42,17 @@ ActiveRecord::Schema.define(:version => 20121104081746) do
   end
 
   create_table "locations", :force => true do |t|
-    t.string "city",  :null => false
-    t.string "county_id", :null => false
+    t.string  "city",      :null => false
+    t.string  "state",     :null => false
+    t.integer "county_id"
+  end
+
+  create_table "sessions", :force => true do |t|
+    t.string   "session_hash"
+    t.string   "latlng"
+    t.integer  "location_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "shelters", :force => true do |t|
@@ -52,7 +61,7 @@ ActiveRecord::Schema.define(:version => 20121104081746) do
   end
 
   create_table "zipcodes", :force => true do |t|
-    t.string  "code",        :null => false
+    t.string  "code",      :null => false
     t.integer "county_id"
   end
 

@@ -1,12 +1,12 @@
-class LocationByGeoipConstraint
+class LocationByparams
   def self.matches?(request)
-    request.params[:latlng] =~ /-?\d+\.\d+,-?\d+\.\d+/
-    #/\d{5}/
-  end
-end
-class LocationZipConstraint
-  def self.matches?(request)
-    request.params[:zipcode] =~ /\d{5}/
+    return true if request.params[:latlng] =~ /-?\d+\.\d+,-?\d+\.\d+/
+
+    return true if request.params[:zipcode] =~ /\d{5}/
+
+    return true if request.params[:city] =~ /.+/ && request.params[:state] =~ /[A-Za-z]{2}/
+
+    return false
   end
 end
 
@@ -17,9 +17,8 @@ CrisisHelper::Application.routes.draw do
   match '/contacts' => 'static_pages#contact_list'
   match '/road_conditions' => 'road_conditions#show'
 
-  get 'locations/:id' => 'locations#show', as: :location
-  get 'locations' => 'locations#show', constraints: LocationByGeoipConstraint, as: :location_by_geoip
-  get 'locations' => 'locations#show', constraints: LocationZipConstraint, as: :location_by_zip
+  match 'locations/:id' => 'locations#show', as: :location
+  match 'locations' => 'locations#show', constraints: LocationByparams, as: :location_by_params
 
   get "local_tweets" => "local_tweets#show"
 
