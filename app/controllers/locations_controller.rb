@@ -11,9 +11,5 @@ class LocationsController < ApplicationController
     if params[:zipcode]
       Location.find_by_zipcode(params[:zipcode])
     end
-
-    if params[:city] and params[:state]
-      Location.find_by_city_and_state(params[:city], params[:state])
-    end
   end
 end

@@ -6,8 +6,8 @@ class Zipcode < ActiveRecord::Base
     require "net/http"
     require "uri"
 
-      uri = URI.parse("http://maps.googleapis.com/maps/api/geocode/json?latlng=#{latlng}&sensor=true")
-      google_results = JSON.parse(Net::HTTP.get(uri))
+    uri = URI.parse("http://maps.googleapis.com/maps/api/geocode/json?latlng=#{latlng}&sensor=true")
+    google_results = JSON.parse(Net::HTTP.get(uri))
 
     google_results['results'].first['address_components'].select {|component| component['types'].first == 'postal_code'}.first['long_name']
   end
