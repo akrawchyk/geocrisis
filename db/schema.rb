@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20121104081746) do
   create_table "counties", :force => true do |t|
     t.string "name", :null => false
     t.string "fip",  :null => false
+    t.string "state_code",  :null => false
   end
 
   create_table "counties_locations", :id => false, :force => true do |t|
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20121104081746) do
 
   create_table "locations", :force => true do |t|
     t.string "city",  :null => false
-    t.string "state", :null => false
+    t.string "county_id", :null => false
   end
 
   create_table "shelters", :force => true do |t|
@@ -52,7 +53,6 @@ ActiveRecord::Schema.define(:version => 20121104081746) do
 
   create_table "zipcodes", :force => true do |t|
     t.string  "code",        :null => false
-    t.integer "location_id"
     t.integer "county_id"
   end
 
