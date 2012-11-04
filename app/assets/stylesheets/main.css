@@ -41,6 +41,7 @@ h1, h2, h3, h4, h5 { color: #262223; }
 }
 
 #tweets .avatar { float: left; margin-right: 10px; }
+#tweets .alert.alert-info { min-height: 65px; }
 
 #overlay {
 	opacity: 0.85;
@@ -57,4 +58,5 @@ h1, h2, h3, h4, h5 { color: #262223; }
 	width: 100%;
 	height: 100%;
 	z-index: 5000;
+	display: none;
 }
