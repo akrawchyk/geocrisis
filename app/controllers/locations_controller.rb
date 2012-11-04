@@ -15,5 +15,13 @@ class LocationsController < ApplicationController
     if params[:city] && params[:state]
       @location = Location.find_by_city_and_state(params[:city], params[:state])
     end
+
+    session = Session.new
+    session.session_hash = request.session_options[:id]
+    session.latlng = params[:latlng] unless params[:latlng].blank?
+    session.location_id = @location.id if @location
+    session.save
+
+    redirect_to '/home'
   end
 end
