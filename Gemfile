@@ -9,6 +9,7 @@ gem 'rails', '3.2.8'
 gem 'mysql2'
 
 gem 'json'
+gem 'nokogiri'
 
 gem 'twitter'
 

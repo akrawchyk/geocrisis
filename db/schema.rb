@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103215711) do
+ActiveRecord::Schema.define(:version => 20121104033937) do
 
   create_table "alerts", :force => true do |t|
     t.string  "type",        :null => false
@@ -35,10 +35,14 @@ ActiveRecord::Schema.define(:version => 20121103215711) do
     t.string "fip",  :null => false
   end
 
+  create_table "counties_locations", :id => false, :force => true do |t|
+    t.integer "county_id",   :null => false
+    t.integer "location_id", :null => false
+  end
+
   create_table "locations", :force => true do |t|
-    t.string  "city",      :null => false
-    t.string  "state",     :null => false
-    t.integer "county_id", :null => false
+    t.string "city",  :null => false
+    t.string "state", :null => false
   end
 
   create_table "shelters", :force => true do |t|

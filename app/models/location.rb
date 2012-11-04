@@ -6,4 +6,7 @@ class Location < ActiveRecord::Base
 
     zipcode.location if zipcode
   end
+
+  has_and_belongs_to_many :counties
+
 end
