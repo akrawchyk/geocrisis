@@ -1,26 +1,32 @@
 <div id="landing-page" class="row">
-  <div class="span6 offset3">
+  <div class="span4 offset4">
     <h2>
       Please enter your location
     </h2>
 
-    <%= form_tag(location_by_params_path, :id => 'location_form') do %>
-      <%= field_set_tag do %>
-        <%= text_field_tag(:zipcode, nil, :placeholder => 'Zipcode') %>
+      <%= form_tag(location_by_params_path, :id => 'location_form') do %>
+        <%= field_set_tag do %>
+          <div class="control-group">
+            <%= text_field_tag(:zipcode, nil, :placeholder => 'Zipcode') %>
+          </div>
 
-        <span class="help-block" style="text-align: center;">OR</span>
+          <span class="help-block" style="text-align: center;">OR</span>
 
-        <%= text_field_tag(:city, nil, :placeholder => 'City') %>
+          <%= text_field_tag(:city, nil, :placeholder => 'City') %>
 
-        <select name="state">
-          <% state_list(true).each do |s| %>
-            <option value="<%= s %>"><%= s %></option>
-          <% end %>
-        </select>
+          <div class="control-group">
+            <select name="state">
+              <% state_list(true).each do |s| %>
+                <option value="<%= s %>"><%= s %></option>
+              <% end %>
+            </select>
+          </div>
 
-        <%= submit_tag('Submit', :class => 'btn btn-danger') %>
+          <div class="control-group">
+            <%= submit_tag('Submit', :class => 'btn btn-block btn-large btn-danger') %>
+          </div>
 
+        <% end %>
       <% end %>
-    <% end %>
   </div>
 </div>

@@ -39,12 +39,15 @@ CrisisHelper.Location.getGeoLocation = function(callback) {
       CrisisHelper.Location.OPTIONS
     );
   } else {
-    alert('Geolocation API not supported');
+    var $alertError = $('<div/>', {
+      'class': 'alert alert-error',
+      text: 'Geolocation API not supported',
+      prependTo: '#landing-page'
+    });
   }
 };
 
 CrisisHelper.Location.watch = function() {
-  console.log('Started watch');
   CrisisHelper.Location.watchProcess = navigator.geolocation.getCurrentPosition(
     CrisisHelper.Location.watchSuccess,
     CrisisHelper.Location.error,
@@ -54,34 +57,39 @@ CrisisHelper.Location.watch = function() {
 
 CrisisHelper.Location.setLocation = function(pos) {
   CrisisHelper.App.clearStorage();
-  localStorage.setItem('CrisisHelperPosition', JSON.stringify(pos)); // TODO this would rather be a custom JSON object from the backend
+  localStorage.setItem('CrisisHelperPosition', JSON.stringify(pos));
   CrisisHelper.Location.position = pos;
   CrisisHelper.Location.getByGeoLocation(pos.coords.latitude, pos.coords.longitude);
 };
 
 CrisisHelper.Location.watchSuccess = function(pos) {
+  console.log('Started watch');
   if (pos.coords.latitude > CrisisHelper.Location.position.coords.latitude + 0.5 ||
       pos.coords.latitude < CrisisHelper.Location.position.coords.latitude - 0.5 ||
-      pos.coords.longitude > CrisisHelper.Location.position.coords.longitude + 0.5 ||
-      pos.coords.longitude < CrisisHelper.Location.position.coords.longitude - 0.5) {
+        pos.coords.longitude > CrisisHelper.Location.position.coords.longitude + 0.5 ||
+          pos.coords.longitude < CrisisHelper.Location.position.coords.longitude - 0.5) {
     console.log('new position');
-    console.log(pos);
-    CrisisHelper.Location.setLocation(pos);
+  console.log(pos);
+  CrisisHelper.Location.setLocation(pos);
   }
 };
 
 CrisisHelper.Location.error = function(error) {
-  var $alertError = $('<div/>', {
-    'class': 'alert alert-error',
-    text: error.message,
-    prependTo: '#landing-page'
-  });
+  console.log(error);
+  if (!CrisisHelper.Location.position) {
+    var $alertError = $('<div/>', {
+      'class': 'alert alert-error',
+      text: error.message,
+      prependTo: '#landing-page'
+    });
+  }
 
   $('#overlay').remove();
 };
 
 CrisisHelper.Location.getByGeoLocation = function(lat, lng) {
   $('#overlay').html('Location acquired!');
+  window.location = '/home';
 
   $.ajax({
     url: '/locations',
@@ -91,75 +99,57 @@ CrisisHelper.Location.getByGeoLocation = function(lat, lng) {
   });
 };
 
-// CrisisHelper.Location.getByZip = function(zip) {
-//   $.ajax({
-//     url: '/locations',
-//     dataType: 'json',
-//     data: {zipcode: zip},
-//     success: CrisisHelper.App.buildLocation
-//   });
-// };
-
-// CrisisHelper.Location.getByCityState = function(city, state) {
-//   $.ajax({
-//     url: '/locations',
-//     dataType: 'json',
-//     data: {city: city, state: state},
-//     success: CrisisHelper.App.fillCountyList
-//   });
-// };
-
 CrisisHelper.App.clearStorage = function() {
   $.each(CrisisHelper.App.STORAGE_KEYS, function(index, key) {
     localStorage.removeItem(key);
   });
 };
 
-CrisisHelper.App.addAlerts = function(alerts) {
-  if (alerts[0].summary) {
-    localStorage.setItem('CrisisHelperAlerts', JSON.stringify(alerts));
-    CrisisHelper.Location.alerts = JSON.parse(alerts);
-    var $alertsElem = $('<div/>', {
-      'class': 'alert alert-error',
-      text: 'Natioal Weather Service Alert',
-      prependTo: '#home'
-    });
+// CrisisHelper.App.addAlerts = function(alerts) {
+//   if (alerts[0].summary) {
+//     localStorage.setItem('CrisisHelperAlerts', JSON.stringify(alerts));
+//     CrisisHelper.Location.alerts = JSON.parse(alerts);
+//     var $alertsElem = $('<div/>', {
+//       'class': 'alert alert-error',
+//       text: 'Natioal Weather Service Alert',
+//       prependTo: '#home'
+//     });
+//
+//     var $alertsIcon = $('<i/>', {
+//       'class': 'icon-warning-sign',
+//       prependTo: $alertsElem
+//     });
+//
+//     $.each(alerts, function(index, alert) {
+//       var $alertElem = $('<p/>', {
+//         text: alert.title,
+//         appendTo: $alertsElem
+//       });
+//     });
+//   }
+// };
 
-    var $alertsIcon = $('<i/>', {
-      'class': 'icon-warning-sign',
-      prependTo: $alertsElem
-    });
-
-    $.each(alerts, function(index, alert) {
-      var $alertElem = $('<p/>', {
-        text: alert.title,
-        appendTo: $alertsElem
-      });
-    });
-  }
-};
-
-CrisisHelper.App.buildLocation = function() {
-  var alerts = localStorage.getItem('CrisisHelperAlerts');
-  if (alerts) {
-    CrisisHelper.Location.alerts = JSON.parse(alerts);
-    CrisisHelper.App.addAlerts(CrisisHelper.Location.alerts);
-  } else {
-    $.ajax({
-      url: '/noaa',
-      dataType: 'json',
-      data: {cc: 'ARC043'}, // TODO
-      success: CrisisHelper.App.addAlerts
-    });
-  }
-};
+// CrisisHelper.App.buildLocation = function() {
+//   var alerts = localStorage.getItem('CrisisHelperAlerts');
+//   if (alerts) {
+//     CrisisHelper.Location.alerts = JSON.parse(alerts);
+//     CrisisHelper.App.addAlerts(CrisisHelper.Location.alerts);
+//   } else {
+//     $.ajax({
+//       url: '/noaa',
+//       dataType: 'json',
+//       data: {cc: 'ARC043'}, // TODO
+//       success: CrisisHelper.App.addAlerts
+//     });
+//   }
+// };
 
 $(function() {
   CrisisHelper.Location.getGeoLocation(function() {
-    if (window.location.href === '/') {
-      window.location = '/home';
-    }
+    // if (window.location.href === '/') {
+    //   window.location = '/home';
+    // }
 
-    CrisisHelper.App.buildLocation();
+    // CrisisHelper.App.buildLocation();
   });
 });
