@@ -58,7 +58,6 @@ CrisisHelper.Location.getLocation = function() {
 };
 
 CrisisHelper.Location.success = function(pos) {
-  console.log(pos);
   CrisisHelper.Location.getByGeoLocation(pos.coords.latitude, pos.coords.longitude);
 };
 
@@ -73,6 +72,8 @@ CrisisHelper.Location.error = function(error) {
 };
 
 CrisisHelper.Location.getByGeoLocation = function(lat, lng) {
+  $('#overlay').html('Location acquired!');
+
   $.ajax({
     url: '/getByGeoLocation',
     dataType: 'json',
