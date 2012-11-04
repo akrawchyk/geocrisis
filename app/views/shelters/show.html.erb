@@ -1,0 +1,18 @@
+<div id="shelters" class="row">
+  <div class="span12">
+    <ul>
+      <% @shelters.each do |shelter| %>
+        <!-- <%= shelter.to_yaml %> -->
+        <li>
+          <h4><%= shelter['name'] %></h4>
+          <% if shelter['opening_hours'] %>
+            <h6>Open now: <i class="<%= shelter['opening_hours']['open_now'] ? 'icon-ok' : 'icon-remove' %>"></i></h6>
+          <% end %>
+          <address>
+            <%= shelter['vicinity'] %>
+          </address>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

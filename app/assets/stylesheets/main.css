@@ -27,15 +27,9 @@ h1, h2, h3, h4, h5 { color: #262223; }
 }
 #home ul li.shift_left { margin-left: -1.5em; margin-right: 1.5em; }
 
-#landing-page, #home {
-	text-align: center;
-}
+#landing-page, #home { text-align: center; }
 
-.clearfix { clear: both; }
-.btn.square { width: 7em; height: 7em; }
-.alert.alert-error span { margin-left: .3em; }
-
-.tweet {
+#tweets .tweet {
 	-webkit-border-radius: 4px; /* Safari 3-4, iOS 1-3.2, Android ≤1.6 */
 	border-radius: 4px; /* Opera 10.5, IE9+, Safari 5, Chrome, Firefox 4+, iOS 4, Android 2.1+ */
 
@@ -55,6 +49,10 @@ h1, h2, h3, h4, h5 { color: #262223; }
 #contacts .contact_name { border-bottom: 1px solid #000000; background: #eeeeee; padding: 0 22px; padding-top: 10px; }
 #contacts .number { padding: 0 22px; padding-bottom: 10px; }
 #contacts .alert.alert-info { padding: 0; }
+
+.clearfix { clear: both; }
+.btn.square { width: 7em; height: 7em; }
+.alert.alert-error span { margin-left: .3em; }
 
 #overlay {
 	opacity: 0.85;
