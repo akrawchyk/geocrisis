@@ -1,0 +1,25 @@
+<div id="landing-page" class="center">
+  <h2>
+    Please enter your location
+  </h2>
+
+  <form id="location_form" action="/" method="post">
+    <fieldset>
+
+      <input type="text" placeholder="Zipcode" name="zipcode"/>
+      <span class="help-block" style="text-align: center;">OR</span>
+
+      <input type="text" placeholder="City" name="city"/>
+
+      <label>
+        <select name="state">
+          <% state_list(true).each do |s| %>
+            <option value="<%= s %>"><%= s %></option>
+          <% end %> 
+        </select>
+      </label>
+
+      <button type="submit" class="btn btn-danger">Submit</button>
+    </fieldset>
+  </form>
+</div>

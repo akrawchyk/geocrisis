@@ -1,5 +1,5 @@
 CrisisHelper::Application.routes.draw do
-  root to: 'static_pages#home'
+  root to: 'static_pages#landing_page'
   # get "static_pages/home"
 
   # The priority is based upon order of creation:
