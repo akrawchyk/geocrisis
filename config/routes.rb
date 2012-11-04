@@ -11,6 +11,7 @@ class LocationZipConstraint
 end
 
 CrisisHelper::Application.routes.draw do
+
   root to: 'static_pages#landing_page'
   match '/home' => 'static_pages#home'
   match '/contacts' => 'static_pages#contact_list'
@@ -20,4 +21,6 @@ CrisisHelper::Application.routes.draw do
   get 'locations' => 'locations#show', constraints: LocationZipConstraint, as: :location_by_zip
 
   get "local_tweets" => "local_tweets#show"
+
+  get "shelters" => "shelters#show"
 end
