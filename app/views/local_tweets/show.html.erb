@@ -13,7 +13,7 @@
     </div>
   <% end %>
   <div class="span6 offset3">
-    <button class="btn btn-info" onclick="LocalTweets.retrieveEarlier($(this).closest('.tweet').data('tweet-id'))">
+    <button class="btn btn-info" onclick="LocalTweets.retrieveEarlier($('.tweet:last').data('tweet-id'))">
       Load more
     </button>
   </div>
