@@ -1,0 +1,17 @@
+<div id="road_conditions">
+	<% @road_conditions.each do |r| %>
+		<div class="item">
+			<h4 class="description">
+				<%= r['description'] %>
+			</h4>
+			<div class="is_closed">
+				<% if r['roadClosed'] %>
+					<strong>The road is closed.</strong>
+				<% else %>
+					<strong>The road is not closed.</strong>
+				<% end %>
+			</div>
+			<div class="level">Severity: <%= r['severity'] %></div>
+		</div>
+	<% end %>
+</div>
