@@ -15,6 +15,7 @@ CrisisHelper::Application.routes.draw do
   root to: 'static_pages#landing_page'
   match '/home' => 'static_pages#home'
   match '/contacts' => 'static_pages#contact_list'
+  match '/tweets' => 'static_pages#item_list'
 
   get 'locations/:id' => 'locations#show', as: :location
   get 'locations' => 'locations#show', constraints: LocationByGeoipConstraint, as: :location_by_geoip
