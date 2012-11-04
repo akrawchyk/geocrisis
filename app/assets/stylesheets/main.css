@@ -1,5 +1,6 @@
 body { padding-top: 50px; background: #f2f2f2; }
 h1, h2, h3, h4, h5 { color: #262223; }
+h2.title_name { text-align: left; margin-left: 0; }
 
 .navbar { background: #ec5d59; /* Old browsers */
 	background: -moz-linear-gradient(top,  #ec5d59 0%, #bf3831 100%); /* FF3.6+ */
@@ -30,6 +31,7 @@ h1, h2, h3, h4, h5 { color: #262223; }
 #landing-page, #home { text-align: center; }
 
 #road_conditions .item {
+	clear: left;
 	-webkit-border-radius: 4px; /* Safari 3-4, iOS 1-3.2, Android ≤1.6 */
 	border-radius: 4px; /* Opera 10.5, IE9+, Safari 5, Chrome, Firefox 4+, iOS 4, Android 2.1+ */
 
