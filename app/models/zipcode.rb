@@ -1,5 +1,6 @@
 class Zipcode < ActiveRecord::Base
   attr_accessible :code
+  belongs_to :county
 
   def self.find_by_latlng(latlng)
     require "net/http"

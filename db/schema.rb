@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121104033937) do
+ActiveRecord::Schema.define(:version => 20121104081746) do
 
   create_table "alerts", :force => true do |t|
     t.string  "type",        :null => false
@@ -52,7 +52,8 @@ ActiveRecord::Schema.define(:version => 20121104033937) do
 
   create_table "zipcodes", :force => true do |t|
     t.string  "code",        :null => false
-    t.integer "location_id", :null => false
+    t.integer "location_id"
+    t.integer "county_id"
   end
 
 end
