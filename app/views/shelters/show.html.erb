@@ -1,8 +1,9 @@
 <div id="shelters" class="row">
+  <%= render :partial => "common/page_title", :locals => {:title => "Shelters"} %>
+
   <div class="span12">
     <ul>
       <% @shelters.each do |shelter| %>
-        <!-- <%= shelter.to_yaml %> -->
         <li>
           <h4><%= shelter['name'] %></h4>
           <% if shelter['opening_hours'] %>
