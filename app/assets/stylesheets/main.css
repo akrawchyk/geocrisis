@@ -12,7 +12,9 @@ h1, h2, h3, h4, h5 { color: #262223; }
 	position: fixed; padding-bottom: .4em;
 }
 .navbar button { float: right; margin-right: 2em; }
+.navbar button.back_button { float: left; margin-right: 0; margin-left: 2em; }
 .navbar span.title { margin-left: 2em; color: #f2f2f2; margin-top: .5em; float: left; font-size: 18px; }
+.navbar.downstream span.title { margin-left: .5em; }
 
 #home ul { display: inline-table; }
 #home ul li {
@@ -32,6 +34,13 @@ h1, h2, h3, h4, h5 { color: #262223; }
 .clearfix { clear: both; }
 .btn.square { width: 7em; height: 7em; }
 .alert.alert-error span { margin-left: .3em; }
+.alert.alert-info {   
+	background-color: #D7D7D7;
+  	border-color: #D6D3D3;
+  	color: #262223; 
+}
+
+#tweets .avatar { float: left; margin-right: 10px; }
 
 #overlay {
 	opacity: 0.85;
