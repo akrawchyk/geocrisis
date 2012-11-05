@@ -20,17 +20,19 @@
         <% unless @hide_back_button %>
           <button type="button" class="back_button btn" onclick="history.go(-1)">
             <i class="icon-home"></i>
-            Back
           </button>
         <% end %>
 
-        <span class="title"><%= "#{@location.city}, #{@location.state}" %></span>
+        <span class="title"><%= "#{@location.city} (#{@location.county.name} County), #{@location.state}" %></span>
         <%# TODO %>
         <% unless @hide_menu %>
           <button id="nav_menu_button" type="button" class="btn">
             <i class="icon-align-justify"></i>
           </button>
         <% end %>
+        <button id="nav_menu_button" type="button" class="btn" onclick="window.location = '/clear'">
+          <i class="icon-trash"></i>
+        </button>
       </div>
     <% end %>
 

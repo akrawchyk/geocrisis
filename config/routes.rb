@@ -17,6 +17,8 @@ CrisisHelper::Application.routes.draw do
   match '/road_conditions' => 'road_conditions#show'
   match '/render_navigation' => 'common#render_navigation'
   match '/schools' => 'schools#index', :as => :schools
+  match '/utilities' => 'common#utilities', :as => :utilities
+  match '/clear' => 'common#clear', :as => :clear
 
   match 'locations/:id' => 'locations#show', as: :location
   match 'locations' => 'locations#show', constraints: LocationByparams, as: :location_by_params

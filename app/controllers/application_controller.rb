@@ -19,4 +19,16 @@ class ApplicationController < ActionController::Base
 
     return JSON.parse(open("#{Rails.application.config.goog_geocode_url}&address=#{query}&rankby=distance&sensor=false").read)['results']
   end
+
+  def googleapi_by_latlng(latlng)
+    require "net/http"
+    require "uri"
+
+    uri = URI.parse("http://maps.googleapis.com/maps/api/geocode/json?latlng=#{latlng}&sensor=true")
+    google_results = JSON.parse(Net::HTTP.get(uri))
+
+    {:city => google_results['results'].first['address_components'].select { |component| component['types'].include?('locality') && component['types'].include?('political') }.first['long_name'],
+     :county => google_results['results'].first['address_components'].select { |component| component['types'].include?('administrative_area_level_2') }.first['long_name'],
+     :state => google_results['results'].first['address_components'].select { |component| component['types'].include?('administrative_area_level_1') }.first['short_name']}
+  end
 end

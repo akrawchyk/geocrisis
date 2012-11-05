@@ -6,4 +6,14 @@ class CommonController < ApplicationController
   		})
   	}
   end
+
+  def utilities
+
+  end
+
+  def clear
+    Session.find_by_session_hash(session[:session_id]).delete
+
+    redirect_to '/'
+  end
 end

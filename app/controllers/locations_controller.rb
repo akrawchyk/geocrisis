@@ -7,7 +7,11 @@ class LocationsController < ApplicationController
     else
       @location = Location.find(params[:id]) if params[:id]
 
-      @location = Location.find_by_county_id(County.find_by_latlng(params[:latlng]).id) unless @location || params[:latlng].blank?
+
+      unless @location || params[:latlng].blank?
+        google_data = googleapi_by_latlng(params[:latlng])
+        @location = Location.find_by_city_and_state(google_data[:city], google_data[:state])
+      end
 
       @location = Location.find_by_zipcode(params[:zipcode]) unless @location || params[:zipcode].blank?
 

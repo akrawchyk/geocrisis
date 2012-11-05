@@ -5,8 +5,11 @@
     <ul>
       <% unless @schools.blank? || @schools.empty? %>
         <% @schools.each do |school|
-          geo = googGeoIP(@location.county.zipcodes.first.code)
-          pos = geo.first['geometry']['location']
+          begin
+            geo = googGeoIP(@location.county.zipcodes.first.code)
+            pos = geo.first['geometry']['location']
+          rescue
+          end
         %>
           <li>
             <h4><%= school['name'] %></h4>
@@ -14,7 +17,9 @@
             <address>
               <%= school['address'] %>
             </address>
-            <button type="submit" class="btn btn-danger" onclick="window.open('https://maps.google.com/maps?ll=<%= "#{pos['lat']},#{pos['lng']}', '_blank')" %>">View Map</button>
+            <% if pos %>
+              <button type="submit" class="btn btn-danger" onclick="window.open('https://maps.google.com/maps?ll=<%= "#{pos['lat']},#{pos['lng']}', '_blank')" %>">View Map</button>
+            <% end %>
           </li>
         <% end %>
       <% end %>
